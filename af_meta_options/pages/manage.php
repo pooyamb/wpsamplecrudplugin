@@ -2,7 +2,8 @@
 /**
  * This function generates view for manage page.
  * @global type $wpdb
- * @param type $table_name
+ * @param array $messages
+ * @param array $rows
  */
 function af_meta_manage_view($message,$rows){
 ?>

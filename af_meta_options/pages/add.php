@@ -3,15 +3,18 @@
 /**
  * This function generates add page view.
  * @global type $wpdb
- * @param type $table_name
+ * @param array $message
+ * @param array $fields
  */
-function af_meta_add_view($message,$fields){
+function af_meta_add_view($message, $fields)
+{
 //insert
-?>
+
+    ?>
     <div class="wrap">
         <h2>Add Meta Option
-                    <a class="add-new-h2" href="<?php echo admin_url('admin.php?page=manage_meta_options'); ?>">Go back to management page</a></h2>
-        <?php if (isset($message) && !is_array($message)): ?><div class="updated"><p><?php echo $message;?></p></div><?php endif;?>
+            <a class="add-new-h2" href="<?php echo admin_url('admin.php?page=manage_meta_options'); ?>">Go back to management page</a></h2>
+        <?php if (isset($message) && !is_array($message)): ?><div class="updated"><p><?php echo $message; ?></p></div><?php endif; ?>
         <form method="post" action="<?php echo $_SERVER['REQUEST_URI']; ?>">
             <table class='wp-list-table widefat fixed'>
                 <tr>
@@ -42,8 +45,21 @@ function af_meta_add_view($message,$fields){
                         <?php echo isset($message['update_period']) ? $message['update_period'] : '' ?>
                     </td>
                 </tr>
+                <tr>
+                    <th>Time</th>
+                    <td>
+                        <input type="text" class="af_time" name="time" value="<?php echo $fields['time']; ?>" />
+                        <?php echo isset($message['time']) ? $message['time'] : '' ?>
+                    </td>
+                </tr>
             </table>
             <input type='submit' name="insert" value='Save' class='button'>
         </form>
     </div>
-<?php } 
+    <script type="text/javascript">
+        jQuery(document).ready(function ($) {
+            $('.af_time').datepicker({});
+        });
+    </script>
+    <?php
+}
