@@ -182,7 +182,7 @@ class AFMetaModel
      * @param type $limit
      * @return type
      */
-    public function read($count = 'all', $conditions = array(), $limit = false)
+    public function read($count = 'all', $conditions = array(), $limit = false, $offset = false)
     {
         if (!empty($fields)) {
             $this->field_values = array_merge($this->field_values, $fields);
@@ -194,10 +194,13 @@ class AFMetaModel
             foreach ($conditions as $key => $value) {
                 $where .= "`{$key}` = '{$value}' AND ";
             }
-            $where.= '1=1';
+            $where.= '1=1 ';
         }
         if ($limit && $count == 'all') {
             $where.="LIMIT {$limit}";
+        }
+        if ($limit && $offset) {
+            $where.=",{$offset}";
         }
         $select_fields = implode(',', $this->fields);
         if ($count == 'first') {
@@ -207,6 +210,26 @@ class AFMetaModel
             $rows = $wpdb->get_results("SELECT {$select_fields} from `{$this->table_name}` {$where}", ARRAY_A);
         }
         return $rows;
+    }
+
+    /**
+     * get count of rows with conditions
+     * @global type $wpdb
+     * @param array $conditions
+     * @return int
+     */
+    public function count($conditions = array())
+    {
+        global $wpdb;
+        if (is_array($conditions)) {
+            $where = 'WHERE ';
+            foreach ($conditions as $key => $value) {
+                $where .= "`{$key}` = '{$value}' AND ";
+            }
+            $where.= '1=1 ';
+        }
+        $rows = $wpdb->get_row("SELECT COUNT(*) from `{$this->table_name}` {$where}", ARRAY_A);
+        return $rows['COUNT(*)'];
     }
 
     /**

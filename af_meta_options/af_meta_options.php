@@ -122,10 +122,14 @@ class AFMetaOptions
         //Creating array of values
         require_once(AFMetaPluginRoot . 'af_meta_options_model.php');
         $model = new AFMetaModel($this->table_name);
-        $fields = $model->read();
+        $page = isset($_GET["af_page"]) ? esc_sql($_GET["af_page"]) : 1;
+        $limit = 10;
+        $offset = 10 * ($page - 1);
+        $fields = $model->read('all', array(), $limit, $offset);
+        $count = $model->count();
 
         require_once(AFMetaPluginRoot . 'pages' . DIRECTORY_SEPARATOR . 'manage.php');
-        af_meta_manage_view($message, $fields);
+        af_meta_manage_view($message, $fields, $count);
     }
 
     /**
