@@ -1,11 +1,10 @@
 <?php
 
 /**
- * Setup class, this class will handle activation, deactivation and uninstallation orders
+ * Setup class, this class will handle activation, deactivation and uninstallation orders.
  */
 class AFMetaOptionsSetup
 {
-
     /**
      * @var float
      */
@@ -18,7 +17,8 @@ class AFMetaOptionsSetup
 
     /**
      * Constructor functions, sets version number and target table name.
-     * @param float $version
+     *
+     * @param float  $version
      * @param string $table_name
      */
     public function __construct($version, $table_name)
@@ -29,6 +29,7 @@ class AFMetaOptionsSetup
 
     /**
      * This function will return current version of AFMeraOptions plugin.
+     *
      * @return float
      */
     public function get_version()
@@ -91,7 +92,7 @@ class AFMetaOptionsSetup
                 UNIQUE KEY id (id)
             ) {$charset_collate};";
 
-        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        require_once ABSPATH.'wp-admin/includes/upgrade.php';
         dbDelta($sql);
     }
 
@@ -100,7 +101,6 @@ class AFMetaOptionsSetup
      */
     private function upgrade_plugin()
     {
-        
     }
 
     /**
